@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:layout_gravity="center">
-
-    <Button
-        android:id="@+id/analytics"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Analytics"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:layout_centerVertical="true"
-        />
+        android:orientation="horizontal"
+        android:padding="16dp">
+        <Button
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Analytics"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/baseline_analytics_24"
+            android:drawableTint="@color/white"
+            android:background="@drawable/filled_color_button"/>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Import data"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@id/analytics"
-        android:layout_alignTop="@id/analytics"/>
+        <Button
+            android:id="@+id/dataimport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_add_24"
+            android:text="Import data"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/analytics"
+            android:layout_alignTop="@id/analytics"
+            android:drawableTint="@color/iconTint"
+            android:textColor="@color/iconTint"
+            android:background="@drawable/outlined_button"/>
+    </LinearLayout>
+
 </RelativeLayout>

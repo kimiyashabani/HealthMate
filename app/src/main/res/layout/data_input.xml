@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/heartrate"
+                android:padding="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Heart rate"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/baseline_monitor_heart_24"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/datainput_design"
+                android:textColor="@color/black"
+                android:drawableTint="@color/iconTint" />
+            <TextView
+                android:id="@+id/bloodpressure"
+                android:padding="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Blood Pressure"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/baseline_monitor_heart_24"
+                android:gravity="center"
+                android:background="@drawable/datainput_design"
+                android:textColor="@color/black"
+                android:drawableTint="@color/iconTint"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/weight"
+                android:padding="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Weight"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/baseline_monitor_heart_24"
+                android:gravity="center"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/datainput_design"
+                android:textColor="@color/black"
+                android:drawableTint="@color/iconTint"/>
+            <TextView
+                android:id="@+id/medication"
+                android:padding="30dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Medication"
+                android:textSize="16sp"
+                android:drawableTop="@drawable/baseline_monitor_heart_24"
+                android:gravity="center"
+                android:background="@drawable/datainput_design"
+                android:textColor="@color/black"
+                android:drawableTint="@color/iconTint"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/analytics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:backgroundTint="#00FFFFFF"
+            android:drawableLeft="@drawable/baseline_analytics_24"
+            android:drawableTint="@color/iconTint"
+            android:text="Analytics"
+            android:textColor="@color/iconTint"
+            app:strokeColor="@color/iconTint"
+            app:strokeWidth="@dimen/cardview_compat_inset_shadow" />
+
+        <Button
+            android:id="@+id/dataimport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/analytics"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/analytics"
+            android:backgroundTint="@color/iconTint"
+            android:drawableLeft="@drawable/baseline_add_24"
+            android:drawableTint="@color/white"
+            android:text="Import data" />
+    </LinearLayout>
+
+
+</LinearLayout>
