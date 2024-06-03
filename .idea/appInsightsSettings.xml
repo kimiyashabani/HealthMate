@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.healthmate" />
+                  <option name="mobileSdkAppId" value="1:24450455662:android:542d8a67e11d5729986e7f" />
+                  <option name="projectId" value="healthmate-37101" />
+                  <option name="projectNumber" value="24450455662" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

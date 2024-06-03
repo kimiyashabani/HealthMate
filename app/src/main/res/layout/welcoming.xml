@@ -5,12 +5,18 @@
     android:background="#9EA37E"
     android:gravity="center">
 
+    <ImageView
+        android:id="@+id/welcomeLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/healthmate_favicon">
+    </ImageView>
     <TextView
-        android:id="@+id/welcome_text"
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="HealthMate"
-        android:textSize="24sp"
-        android:textColor="@color/white" />
-
+        android:textSize="26sp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/welcomeLogo"/>
 </RelativeLayout>

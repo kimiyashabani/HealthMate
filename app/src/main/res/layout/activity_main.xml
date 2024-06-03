@@ -10,16 +10,6 @@
         android:orientation="horizontal"
         android:padding="16dp">
         <Button
-            android:id="@+id/analytics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Analytics"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/baseline_analytics_24"
-            android:drawableTint="@color/white"
-            android:background="@drawable/filled_color_button"/>
-
-        <Button
             android:id="@+id/dataimport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
