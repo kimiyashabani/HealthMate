@@ -28,6 +28,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -46,11 +47,9 @@ dependencies {
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
+    // for Realtime Database
+    implementation("com.google.firebase:firebase-database:20.0.5")
+    // for visualization
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-    implementation("com.google.firebase:firebase-database:20.0.5")// for Realtime Database
-
-
-
-    // Add the dependencies for any other desired Firebase products
-    // https://firebase.google.com/docs/android/setup#available-libraries
 }

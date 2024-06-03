@@ -1,26 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:padding="16dp">
-        <Button
-            android:id="@+id/dataimport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/baseline_add_24"
-            android:text="Import data"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@id/analytics"
-            android:layout_alignTop="@id/analytics"
-            android:drawableTint="@color/iconTint"
-            android:textColor="@color/iconTint"
-            android:background="@drawable/outlined_button"/>
-    </LinearLayout>
+    android:layout_height="match_parent"
+    android:padding="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/section1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-</RelativeLayout>
+                        <TextView
+                            android:id="@+id/medicationsList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medications:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"/>
+
+                        <ListView
+                            android:id="@+id/medicationListView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="16dp"
+                            android:layout_centerHorizontal="true"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/section2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/section1">
+
+                        <TextView
+                            android:id="@+id/heartrateList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Heart rate:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"/>
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/heartRateLineChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_below="@id/medicationListView"
+                            android:layout_marginBottom="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/section3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/section2">
+
+                        <TextView
+                            android:id="@+id/bloodpressureList"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Blood Pressure:"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"/>
+
+                        <com.github.mikephil.charting.charts.BarChart
+                            android:id="@+id/bloodPressureBarChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_below="@id/heartRateLineChart"
+                            android:layout_marginBottom="16dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/section4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/section3">
+
+                        <TextView
+                            android:id="@+id/weightlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your current weight: "
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="16dp"/>
+
+                        <TextView
+                            android:id="@+id/weightTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Weight"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/dataimport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:backgroundTint="@color/iconTint"
+                    android:drawableLeft="@drawable/baseline_add_24"
+                    android:drawableTint="@color/white"
+                    android:text="Import data"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/section4"/>
+
+
+        </LinearLayout>
+</ScrollView>
