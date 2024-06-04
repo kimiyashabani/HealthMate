@@ -10,6 +10,7 @@ import java.util.List;
 
 
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isPill1Taken = false;
+    private boolean isPill1NotTaken = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +41,40 @@ public class MainActivity extends AppCompatActivity {
         float[] bloodPressureData = {120f, 130f, 125f, 128f, 122f};
         float weightData = 70f;
 
-        // Medication List
-        ListView medicationListView = findViewById(R.id.medicationListView);
-        ArrayAdapter<String> medicationAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, medicationData);
-        medicationListView.setAdapter(medicationAdapter);
+        // First Medication
+        ImageButton pill_1_is_taken = findViewById(R.id.pills1_taken);
+        ImageButton pill_1_not_taken = findViewById(R.id.pills1_not_taken);
+        TextView med1 = findViewById(R.id.Med1);
+        med1.setText(medicationData[0]);
+
+        pill_1_is_taken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPill1Taken){
+                    pill_1_is_taken.setBackgroundColor(Color.parseColor("#804CAF50"));
+                }else {
+                    pill_1_is_taken.setBackgroundColor(Color.parseColor("#FF4CAF50"));
+                }
+                isPill1Taken = !isPill1Taken;
+            }
+        });
+        pill_1_not_taken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPill1NotTaken){
+                    pill_1_not_taken.setBackgroundColor(Color.parseColor("#80AF4C4C"));
+                }else{
+                    pill_1_not_taken.setBackgroundColor(Color.parseColor("#FFAF4C4C"));
+                }
+               isPill1NotTaken =! isPill1NotTaken;
+            }
+        });
+
+        // Second Medication
+        ImageButton pill_2_is_taken = findViewById(R.id.pills2_taken);
+        ImageButton pill_2_not_taken = findViewById(R.id.pills2_not_taken);
+        TextView med2 = findViewById(R.id.Med2);
+        med2.setText(medicationData[1]);
 
         // Heart Rate Line Chart
         LineChart heartRateLineChart = findViewById(R.id.heartRateLineChart);
