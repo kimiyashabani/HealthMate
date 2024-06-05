@@ -105,20 +105,8 @@ public class InputDataActivity extends AppCompatActivity {
     }
 
     public void saveDataToFirebase(String userId,String type, String value){
-        Log.d("InputDataActivity", "Attempting to save data: Type = " + type + ", Value = " + value);
         HealthData healthData = new HealthData(type, value);
-        Log.d("InputDataActivity", "Got health data");
-        reference.child("users").child(userId).setValue(healthData).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(InputDataActivity.this, "Data saved Successfully", Toast.LENGTH_LONG).show();
-                    Log.d("InputDataActivity", "Data saved successfully");
-                }else {
-                    Toast.makeText(InputDataActivity.this, "Failed to save data", Toast.LENGTH_LONG).show();
-                    Log.d("InputDataActivity", "Failed to save data", task.getException());
-                }
-            }
-        });
+        String uniqueKey = reference.child("users").child(userId).push().getKey();
+        reference.child("users").child(userId).child(uniqueKey).setValue(healthData);
     }
 }
