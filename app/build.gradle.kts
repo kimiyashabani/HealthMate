@@ -24,6 +24,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    buildFeatures{
+        viewBinding = true;
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -48,7 +51,7 @@ dependencies {
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
     // for Realtime Database
-    implementation("com.google.firebase:firebase-database:20.0.5")
+    implementation("com.google.firebase:firebase-database:21.0.0")
     // for visualization
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 

@@ -58,23 +58,11 @@
                 android:textSize="16sp"
                 android:drawableTop="@drawable/baseline_monitor_heart_24"
                 android:gravity="center"
-                android:layout_marginRight="20dp"
                 android:background="@drawable/datainput_design"
                 android:textColor="@color/black"
                 android:drawableTint="@color/iconTint"/>
-            <TextView
-                android:id="@+id/medication"
-                android:padding="30dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Medication"
-                android:textSize="16sp"
-                android:drawableTop="@drawable/baseline_monitor_heart_24"
-                android:gravity="center"
-                android:background="@drawable/datainput_design"
-                android:textColor="@color/black"
-                android:drawableTint="@color/iconTint"/>
+
+
         </LinearLayout>
     </LinearLayout>
     <Button
