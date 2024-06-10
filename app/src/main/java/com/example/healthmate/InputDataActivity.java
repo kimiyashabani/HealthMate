@@ -17,6 +17,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Locale;
 import android.util.Log;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 // Importing FireBase
 import com.example.healthmate.databinding.ActivityMainBinding;
@@ -74,6 +76,14 @@ public class InputDataActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.analytics).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputDataActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -87,7 +97,6 @@ public class InputDataActivity extends AppCompatActivity {
             Toast.makeText(this, "Speech input is not supported on this device.", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -100,13 +109,17 @@ public class InputDataActivity extends AppCompatActivity {
                 Log.d("InputDataActivity", "Recognized speech: " + spokenText);
                 // Saving data to Firebase
                 saveDataToFirebase("1",currentDataType, spokenText);
+                if (currentDataType.equals("weight")) {
+                    Intent intent = new Intent(InputDataActivity.this, MainActivity.class);
+                    intent.putExtra("weight", spokenText);
+                    startActivity(intent);
+                }
             }
         }
     }
-
     public void saveDataToFirebase(String userId,String type, String value){
         HealthData healthData = new HealthData(type, value);
-        String uniqueKey = reference.child("users").child(userId).push().getKey();
-        reference.child("users").child(userId).child(uniqueKey).setValue(healthData);
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        reference.child("users").child(userId).child(currentDate).push().setValue(healthData);
     }
 }
