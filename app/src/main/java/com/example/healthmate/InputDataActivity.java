@@ -53,7 +53,7 @@ public class InputDataActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     private String currentDataType;
     private static final int SMS_PERMISSION_CODE = 100;
-    private static final int CALL_PERMISSION_CODE = 200;
+    private static final int CALL_PERMISSION_CODE = 150;
 
     public static final String ACCOUNT_SID = System.getenv("AC2d14c6c12b9510c7025713eaba7c74be");
     public static final String AUTH_TOKEN = System.getenv("36b78e2ae85d7415da1dc52c7b362fc1");
