@@ -18,6 +18,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/LICENSE.txt")
+        exclude ("META-INF/NOTICE")
+        exclude ("META-INF/NOTICE.txt")
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -58,5 +66,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     // for visualization
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // for Twilio
+    //implementation ("com.twilio.sdk:twilio:8.24.0")
 
 }
