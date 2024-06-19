@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAF5">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/iconTint"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="How are you feeling today?" />
+
+    <LinearLayout
+        android:id="@+id/logdata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topAppBar"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/heartrate"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/datainput_design"
+                    android:drawableTop="@drawable/baseline_monitor_heart_24"
+                    android:drawableTint="@color/iconTint"
+                    android:gravity="center"
+                    android:padding="30dp"
+                    android:text="Heart rate"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/temperature"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/datainput_design"
+                    android:drawableTop="@drawable/baseline_thermostat_24"
+                    android:drawableTint="@color/iconTint"
+                    android:gravity="center"
+                    android:padding="30dp"
+                    android:text="Body Temperature"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/bloodpressure"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/datainput_design"
+                    android:drawableTop="@drawable/baseline_bloodtype_24"
+                    android:drawableTint="@color/iconTint"
+                    android:gravity="center"
+                    android:padding="30dp"
+                    android:text="Blood Pressure"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/datainput_design"
+                    android:drawableTop="@drawable/baseline_monitor_weight_24"
+                    android:drawableTint="@color/iconTint"
+                    android:gravity="center"
+                    android:padding="30dp"
+                    android:text="Weight"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logdata"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/questions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="@color/iconTint"
+            android:drawableLeft="@drawable/baseline_question_mark_24"
+            android:drawableTint="@color/white"
+            android:text="Any Question?" />
+
+    </LinearLayout>
+</RelativeLayout>
+

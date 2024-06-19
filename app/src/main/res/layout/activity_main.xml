@@ -1,223 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:background="#F9FAF5">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/iconTint"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
+            app:title="Hello Kimiya!" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9FAF5"
+        android:padding="20dp"
+        android:layout_below="@+id/topAppBar">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp">
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/Med1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/datainput_design"
+                        android:drawableTop="@drawable/baseline_medication_24"
+                        android:drawableTint="@color/iconTint"
+                        android:padding="30dp"
+                        android:text="Med 1"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/pills1_taken"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_button"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/baseline_done_24" />
+
+                        <ImageButton
+                            android:id="@+id/pills1_not_taken"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_marginRight="10dp">
+                            android:background="@drawable/rounded_button"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/baseline_close_24" />
+                    </LinearLayout>
+                </LinearLayout>
 
-                                <TextView
-                                    android:id="@+id/Med1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/datainput_design"
-                                    android:drawableTop="@drawable/baseline_medication_24"
-                                    android:drawableTint="@color/iconTint"
-                                    android:padding="30dp"
-                                    android:text="Med 1"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="16sp" />
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                                        <ImageButton
-                                            android:id="@+id/pills1_taken"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginRight="10dp"
-                                            android:layout_weight="1"
-                                            android:paddingTop="5dp"
-                                            android:paddingBottom="5dp"
-                                            android:src="@drawable/baseline_done_24"
-                                            android:background="@drawable/rounded_button"/>
+                    <TextView
+                        android:id="@+id/Med2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/datainput_design"
+                        android:drawableTop="@drawable/baseline_medication_24"
+                        android:drawableTint="@color/iconTint"
+                        android:padding="30dp"
+                        android:text="Med 2"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
 
-                                        <ImageButton
-                                            android:id="@+id/pills1_not_taken"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:background="@drawable/rounded_button"
-                                            android:paddingTop="5dp"
-                                            android:paddingBottom="5dp"
-                                            android:src="@drawable/baseline_close_24" />
-                                </LinearLayout>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/pills2_taken"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/rounded_button"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/baseline_done_24" />
+
+                        <ImageButton
+                            android:id="@+id/pills2_not_taken"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
-                                <TextView
-                                    android:id="@+id/Med2"
-                                    android:padding="30dp"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:text="Med 2"
-                                    android:textSize="16sp"
-                                    android:drawableTop="@drawable/baseline_medication_24"
-                                    android:background="@drawable/datainput_design"
-                                    android:textColor="@color/black"
-                                    android:textAlignment="center"
-                                    android:drawableTint="@color/iconTint" />
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    android:layout_marginTop="10dp">
+                            android:background="@drawable/rounded_button"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:src="@drawable/baseline_close_24" />
 
-                                        <ImageButton
-                                            android:id="@+id/pills2_taken"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:background="@drawable/rounded_button"
-                                            android:paddingTop="5dp"
-                                            android:paddingBottom="5dp"
-                                            android:src="@drawable/baseline_done_24"
-                                            android:layout_marginRight="10dp"/>
-
-                                        <ImageButton
-                                            android:id="@+id/pills2_not_taken"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:background="@drawable/rounded_button"
-                                            android:paddingTop="5dp"
-                                            android:paddingBottom="5dp"
-                                            android:src="@drawable/baseline_close_24" />
-
-                                </LinearLayout>
-                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
+            </LinearLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/section2"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/section2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/heartrateList"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/section1">
+                    android:layout_marginBottom="16dp"
+                    android:text="Heart rate:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/heartrateList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Heart rate:"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="16dp"/>
-
-                        <com.github.mikephil.charting.charts.LineChart
-                            android:id="@+id/heartRateLineChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_marginBottom="16dp" />
-
-                </LinearLayout>
-                <LinearLayout
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/heartRateLineChart"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="16dp">
-                        <TextView
-                            android:id="@+id/medicationIntakeList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Medication intake:"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="16dp"/>
-                        <com.github.mikephil.charting.charts.PieChart
-                            android:id="@+id/pie_chart"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/section3"
-                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/medicationIntakeList"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/section2">
-                        <TextView
-                            android:id="@+id/bloodpressureList"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Blood Pressure:"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="16dp"/>
-                        <com.github.mikephil.charting.charts.BarChart
-                            android:id="@+id/bloodPressureBarChart"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_below="@id/heartRateLineChart"
-                            android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp"
+                    android:text="Medication intake:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/section4"
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pie_chart"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/section3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bloodpressureList"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/section3">
+                    android:layout_marginBottom="16dp"
+                    android:text="Blood Pressure:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/weightlist"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Your current weight: "
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:layout_marginBottom="16dp"/>
-
-                        <TextView
-                            android:id="@+id/weightTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Weight"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                </LinearLayout>
-                <LinearLayout
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/bloodPressureBarChart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-                        <Button
-                            android:id="@+id/dataimport"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:backgroundTint="@color/iconTint"
-                            android:drawableLeft="@drawable/baseline_add_24"
-                            android:drawableTint="@color/white"
-                            android:text="Import data"
-                            android:layout_marginBottom="10dp"
-                            android:layout_below="@id/section4"/>
-                </LinearLayout>
+                    android:layout_height="200dp"
+                    android:layout_below="@id/heartRateLineChart"
+                    android:layout_marginBottom="16dp" />
 
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/section4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/section3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/weightlist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Your current weight: "
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/weightTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/dataimport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/section4"
+                    android:layout_centerHorizontal="true"
+                    android:backgroundTint="@color/iconTint"
+                    android:drawableLeft="@drawable/baseline_add_24"
+                    android:drawableTint="@color/white"
+                    android:text="Import data" />
+            </LinearLayout>
 
 
         </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

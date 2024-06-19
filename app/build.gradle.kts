@@ -66,6 +66,8 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     // for visualization
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // for heart rate activity
+    implementation("com.google.android.material:material:1.9.0")
 
 
 }
