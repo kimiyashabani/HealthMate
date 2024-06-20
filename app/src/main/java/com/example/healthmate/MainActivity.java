@@ -54,7 +54,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private Retrofit retrofit;
-    private OpenFDAApi openFDAApi;
+
     //Firebase configuration
     ActivityMainBinding binding;
     private PieChart pieChart;
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 .baseUrl("https://api.fda.gov/")
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
                 .build();
-        openFDAApi = retrofit.create(OpenFDAApi.class);
+
         //getDrugLabels("cardio");
         // Sample data arrays
         float[] heartRateData = {72f, 75f, 78f, 80f, 76f};

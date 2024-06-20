@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class InputDataActivity extends AppCompatActivity {
         TextView bloodPressure = findViewById(R.id.bloodpressure);
         TextView weight = findViewById(R.id.weight);
         TextView temperature = findViewById(R.id.temperature);
+        Button questionButton = findViewById(R.id.questions);
 
         // Setting Click Listeners:
         heartRate.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +88,15 @@ public class InputDataActivity extends AppCompatActivity {
                 promptSpeechInput();
             }
         });
+
+        questionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InputDataActivity.this, EducationalActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);

@@ -159,10 +159,10 @@ public class HeartRateActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
         isHeartRateMeasurementRunning = true;
         //Running the measurement for 30 seconds
-        new Handler().postDelayed(this::stopHeartRateMeasurement,30000);
-        new CountDownTimer(30000, 1000) {
+        new Handler().postDelayed(this::stopHeartRateMeasurement,60000);
+        new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
-                int progress = (int) (millisUntilFinished / 300);
+                int progress = (int) (millisUntilFinished / 600);
                 progressBar.setProgress(progress);
                 timerText.setText(millisUntilFinished / 1000 + " Seconds remaining");
             }
@@ -218,10 +218,10 @@ public class HeartRateActivity extends AppCompatActivity {
         long averageTimeBetweenPeaks = sumOfDifferences / (peaks.size() - 1);
         // calculating heartrate based on the red intensities
         //float heartRate = (60000.0f / (averageTimeBetweenPeaks * measurementDurationInMillis)) * redIntensities.size();
-        float heartRate = peaks.size()/(30.0f/60.0f);
+        float heartRate = peaks.size()/(60.0f)*100;
         //float heartRate = (60000.0f / averageTimeBetweenPeaks);
         String heartRateString = String.format("%.1f", heartRate);
-        heartRateTextView.setText("Heart rate: " + heartRateString + " bpm");
+        heartRateTextView.setText("Heart rate: " + Math.round(heartRate) + " bpm");
         heartRateTextView.setVisibility(View.VISIBLE);
 
         // Saving the data to Firebase
