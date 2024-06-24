@@ -1,5 +1,6 @@
 package com.example.healthmate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.text.SimpleDateFormat;
@@ -15,9 +17,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Calendar;
 
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.google.firebase.database.DataSnapshot;
+
 
 import com.example.healthmate.databinding.ActivityMainBinding;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,7 +39,6 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -46,20 +51,16 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
-    private Retrofit retrofit;
+
 
     //Firebase configuration
     ActivityMainBinding binding;
     private PieChart pieChart;
     FirebaseDatabase db;
     DatabaseReference reference;
+    DatabaseReference healthReference;
     private boolean isPill1Taken = false;
     private boolean isPill1NotTaken = false;
 
@@ -70,10 +71,11 @@ public class MainActivity extends AppCompatActivity {
     private String pill2IsTakenKey = null;
     private String pill2NotTakenKey = null;
 
-    private int AspirinTaken = 5;
-    private int AspirinNotTaken = 10;
-    private int IbuprofenTaken = 15;
-    private int IbuprofenNotTaken = 20;
+    private int AspirinTaken = 0;
+    private int AspirinNotTaken = 0;
+    private int IbuprofenTaken = 0;
+    private int IbuprofenNotTaken = 0;
+    private String specificDate;
 
 
 
@@ -87,22 +89,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = db.getReference("PillIntake");
-        // Retrofit setup
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.fda.gov/")
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
-                .build();
-
-        //getDrugLabels("cardio");
-        // Sample data arrays
-        float[] heartRateData = {72f, 75f, 78f, 80f, 76f};
-        float[] bloodPressureData = {120f, 130f, 125f, 128f, 122f};
-        float weightData = 70f;
-
+        healthReference = db.getReference("HealthData");
         pieChart = findViewById(R.id.pie_chart);
-        setupPieChart();
-        loadPieChartData();
-
         TextView medication1 = findViewById(R.id.Med1);
         TextView medication2 = findViewById(R.id.Med2);
         medication1.setText("Aspirin");
@@ -202,76 +190,107 @@ public class MainActivity extends AppCompatActivity {
                 isPill2NotTaken =! isPill2NotTaken;
             }
         });
-
         // Heart Rate Line Chart
-        LineChart heartRateLineChart = findViewById(R.id.heartRateLineChart);
-        ArrayList<Entry> heartRateEntries = new ArrayList<>();
-        for (int i = 0; i < heartRateData.length; i++) {
-            heartRateEntries.add(new Entry(i, heartRateData[i]));
-        }
-        LineDataSet heartRateDataSet = new LineDataSet(heartRateEntries, "Heart Rate");
-        LineData heartRateLineData = new LineData(heartRateDataSet);
-        heartRateLineChart.setData(heartRateLineData);
-        heartRateDataSet.setColors(ColorTemplate.rgb("FFCE59"));
-        heartRateDataSet.setLineWidth(2);
-        heartRateDataSet.setCircleColors(ColorTemplate.rgb("656853"));
-        heartRateLineChart.invalidate(); // refresh
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i=0 ; i<30 ; i++) {
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_YEAR, -i);
+            specificDate = sdf.format(calendar.getTime());
+            LineChart heartRateLineChart = findViewById(R.id.heartRateLineChart);
+            BarChart bloodPressureBarChart = findViewById(R.id.bloodPressureBarChart);
+            DatabaseReference healthDataReference = healthReference.child("users").child("1").child(specificDate);
+            healthDataReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Entry> heartRateEntries = new ArrayList<>();
+                    ArrayList<BarEntry> bloodPressureEntries = new ArrayList<>();
+                    int heartindexOffset = 0;
+                    int bloodindexOffset = 0;
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        HealthData healthData = child.getValue(HealthData.class);
+                        if (healthData != null && healthData.getType().equals("heartrate")) {
+                            String valueString = healthData.getValue().replace(",", ".");
+                            try {
+                                float heartvalue = Float.parseFloat(valueString);
+                                heartRateEntries.add(new Entry(heartindexOffset, heartvalue));
+                                heartindexOffset += 1;
+                                System.out.println("Heart rate is: " + healthData.getValue());
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error parsing heart rate value: " + healthData.getValue());
+                            }
+                            LineDataSet heartRateDataSet = new LineDataSet(heartRateEntries, "Heart Rate");
+                            heartRateDataSet.setColors(ColorTemplate.rgb("FFCE59"));
+                            heartRateDataSet.setLineWidth(2);
+                            heartRateDataSet.setCircleColors(ColorTemplate.rgb("656853"));
 
-        // Blood Pressure Bar Chart
-        BarChart bloodPressureBarChart = findViewById(R.id.bloodPressureBarChart);
-        ArrayList<BarEntry> bloodPressureEntries = new ArrayList<>();
-        for (int i = 0; i < bloodPressureData.length; i++) {
-            bloodPressureEntries.add(new BarEntry(i, bloodPressureData[i]));
-        }
-        BarDataSet bloodPressureDataSet = new BarDataSet(bloodPressureEntries, "Blood Pressure");
-        BarData bloodPressureBarData = new BarData(bloodPressureDataSet);
-        bloodPressureBarChart.setData(bloodPressureBarData);
-        bloodPressureDataSet.setColors(ColorTemplate.rgb("FFCE59"));
-        bloodPressureBarChart.setBorderColor(ColorTemplate.rgb("656853"));
-        bloodPressureBarChart.invalidate(); // refresh
+                            LineData heartRateLineData = new LineData(heartRateDataSet);
+                            heartRateLineChart.setData(heartRateLineData);
+                            heartRateLineChart.invalidate(); // refresh
 
+                        } else if (healthData != null && healthData.getType().equals("bloodPressure")) {
+                            String valueString = healthData.getValue().replace(",", ".");
+                            try {
+                                float bloodPressure = Float.parseFloat(valueString);
+                                bloodPressureEntries.add(new BarEntry(bloodindexOffset, bloodPressure));
+                                bloodindexOffset += 1;
+                                System.out.println("Blood pressure is: " + healthData.getValue());
+                            } catch (NumberFormatException e) {
+                                System.out.println("Error parsing blood pressure value: " + healthData.getValue());
+                            }
+                            BarDataSet bloodPressureDataSet = new BarDataSet(bloodPressureEntries, "Blood Pressure");
+                            BarData bloodPressureBarData = new BarData(bloodPressureDataSet);
+                            bloodPressureBarChart.setData(bloodPressureBarData);
+                            bloodPressureDataSet.setColors(ColorTemplate.rgb("FFCE59"));
+                            bloodPressureBarChart.setBorderColor(ColorTemplate.rgb("656853"));
+                            bloodPressureBarChart.invalidate(); // refresh
+                        }
+
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    System.out.println("Failed to read value.");
+                }
+            });
+            DatabaseReference pillIntakeDataReference = reference.child("users").child(specificDate);
+            pillIntakeDataReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        PillIntake pillIntake = child.getValue(PillIntake.class);
+                        if (pillIntake != null) {
+                            if (pillIntake.getMedicationName().equals("Aspirin")){
+                                if (pillIntake.isTaken()){
+                                    AspirinTaken++;
+                                }else {
+                                    AspirinNotTaken++;
+                                }
+                            }else if (pillIntake.getMedicationName().equals("Ibuprofen")){
+                                if (pillIntake.isTaken()){
+                                    IbuprofenTaken++;
+                                }else {
+                                    IbuprofenNotTaken++;
+                                }
+                            }
+                        }
+                    }
+                    setupPieChart();
+                    loadPieChartData();
+                }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    System.out.println("Failed to read value.");
+                }
+            });
+
+        }
         // Weight TextView
         Intent intent = getIntent();
         int weight = intent.getIntExtra("weight", 0);
         TextView weightTextView = findViewById(R.id.weightTextView);
         weightTextView.setText(weight + "kg");
-        String specificDate = "2024-06-06";
-        DatabaseReference myDataReference = reference.child("users").child(specificDate);
-
-        myDataReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                //String value = String.valueOf(dataSnapshot.getValue(PillIntake.class));
-                //System.out.println("Value is: " + value);
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    PillIntake pillIntake = child.getValue(PillIntake.class);
-                    if (pillIntake != null) {
-                        //System.out.println("Medication Name: " + pillIntake.getMedicationName());
-                        //System.out.println("Taken: " + pillIntake.isTaken());
-                        if (pillIntake.getMedicationName().equals("Aspirin")){
-                            if (pillIntake.isTaken()){
-                                AspirinTaken++;
-                            }else {
-                                AspirinNotTaken++;
-                            }
-                        }else if (pillIntake.getMedicationName().equals("Ibuprofen")){
-                            if (pillIntake.isTaken()){
-                                IbuprofenTaken++;
-                            }else {
-                                IbuprofenNotTaken++;
-                            }
-
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                System.out.println("Failed to read value.");
-            }
-        });
         findViewById(R.id.dataimport).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,67 +304,22 @@ public class MainActivity extends AppCompatActivity {
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(5, 10, 5, 5);
-        // More configuration...
-
-        // Optional: Customize the legend
-        // Legend legend = pieChart.getLegend();
-        // More customization...
+        pieChart.setDragDecelerationFrictionCoef(0.95f);
+        pieChart.setDrawHoleEnabled(true);
     }
 
     private void loadPieChartData() {
         List<PieEntry> entries = new ArrayList<>();
-
         // Add data entries for pills taken
         entries.add(new PieEntry(AspirinTaken, "Aspirin Taken"));
         entries.add(new PieEntry(IbuprofenTaken, "Ibuprofen Taken"));
-
-        // Add data entries for pills not taken
-        entries.add(new PieEntry(AspirinNotTaken, "Aspirin Not Taken"));
-        entries.add(new PieEntry(IbuprofenNotTaken, "Ibuprofen Not Taken"));
-
         PieDataSet dataSet = new PieDataSet(entries, "Pills Intake");
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         dataSet.setValueTextSize(12f);
-
+        dataSet.setValueTextColor(Color.BLACK);
         PieData pieData = new PieData(dataSet);
         pieData.setValueFormatter(new PercentFormatter(pieChart));
         pieChart.setData(pieData);
-        pieChart.invalidate(); // refresh chart
+        pieChart.invalidate();
     }
-
-    /*private void getDrugLabels(String query){
-    Call<DrugLabelResponse> call = openFDAApi.getDrugLabels("generic_name:" + query, 10);
-    call.enqueue(new Callback<DrugLabelResponse>() {
-        @Override
-        public void onResponse(Call<DrugLabelResponse> call, Response<DrugLabelResponse> response) {
-            if (response.isSuccessful()) {
-                DrugLabelResponse drugLabelResponse = response.body();
-                if (drugLabelResponse != null) {
-                    List<String> drugNames = new ArrayList<>();
-                    for (DrugLabelResponse.DrugLabelResult result : drugLabelResponse.results) {
-                        drugNames.add(result.openfda.generic_name[0]);
-                    }
-                    getRandomMedicationNames(drugNames);
-                    System.out.println("got drug information successfully");
-                }
-            } else {
-                System.out.println("Failed to get drug information");
-            }
-        }
-
-        @Override
-        public void onFailure(Call<DrugLabelResponse> call, Throwable t) {
-            System.out.println("Failed to get drug information: " + t.getMessage());
-        }
-    });
-}
-    private void getRandomMedicationNames(List<String> medicationNames){
-        if (medicationNames.size() >= 3){
-            TextView medication1 = findViewById(R.id.Med1);
-            TextView medication2 = findViewById(R.id.Med2);
-            medication1.setText(medicationNames.get(0));
-            medication2.setText(medicationNames.get(1));
-        }
-    }*/
-
 }

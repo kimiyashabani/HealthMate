@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,11 +28,12 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.FirebaseApp;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
-
 import androidx.core.app.ActivityCompat;
+import android.accounts.AccountManager;
+
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 
 public class InputDataActivity extends AppCompatActivity {
 
@@ -143,21 +146,10 @@ public class InputDataActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(InputDataActivity.this, "You said: " + spokenText, Toast.LENGTH_LONG).show();
                         saveDataToFirebase("1", currentDataType, spokenText);
-                        if (currentDataType.equals("heartrate")) {
-                            int heartRate = Integer.parseInt(spokenText);
-                            if (heartRate > 100 || heartRate < 60) {
-                                //sendSMS(heartRate, "heart rate");
-                                //callAmbulance();
-                            }
-                        } else if (currentDataType.equals("bloodPressure")) {
-                            int bloodPressure = Integer.parseInt(spokenText);
-                            if (bloodPressure > 140) {
-                                //sendSMS(bloodPressure, "blood pressure");
-                            }
-                        } else if (currentDataType.equals("tempreture")) {
+                        if (currentDataType.equals("temperature")) {
                             int temperature = Integer.parseInt(spokenText);
-                            if (temperature > 38.5) {
-                                //sendSMS(bloodPressure, "tempreture");
+                            if (temperature > 38) {
+
                             }
                         } else if (currentDataType.equals("weight")) {
                             int weight = Integer.parseInt(spokenText);
@@ -176,5 +168,7 @@ public class InputDataActivity extends AppCompatActivity {
         String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
         reference.child("users").child(userId).child(currentDate).push().setValue(healthData);
     }
+
+
 }
 

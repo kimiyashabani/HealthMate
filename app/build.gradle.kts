@@ -18,20 +18,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    packagingOptions {
-        exclude ("META-INF/DEPENDENCIES")
-        exclude ("META-INF/LICENSE")
-        exclude ("META-INF/LICENSE.txt")
-        exclude ("META-INF/NOTICE")
-        exclude ("META-INF/NOTICE.txt")
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+        exclude ("META-INF/LICENSE")
+        exclude ("META-INF/LICENSE.txt")
+        exclude ("META-INF/NOTICE")
+        exclude ("META-INF/NOTICE.txt")
+        exclude ("META-INF/NOTICE.md")
+        exclude ("META-INF/LICENSE.md") // Add this line
+
+    }
+
     buildFeatures{
         viewBinding = true;
     }
@@ -66,12 +69,14 @@ dependencies {
     implementation("com.google.firebase:firebase-database:21.0.0")
     // for visualization
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    // for heart rate activity
-    implementation("com.google.android.material:material:1.9.0")
 
-    // for HTTP requests
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.sun.mail:android-mail:1.6.6")
+    implementation("com.sun.mail:android-activation:1.6.6")
+
+    implementation("com.google.api-client:google-api-client-android:1.33.0")
+    implementation("com.google.apis:google-api-services-gmail:v1-rev110-1.25.0")
+    implementation("com.google.android.gms:play-services-auth:19.0.0")
+    implementation("com.google.api-client:google-api-client-gson:1.33.0")
 
 
 }
