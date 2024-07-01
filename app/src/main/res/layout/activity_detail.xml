@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="20dp">
 
     <TextView
@@ -28,5 +29,12 @@
         android:layout_marginTop="16dp"
         android:textSize="18sp"
         android:text="Detail Text" />
+    <Button
+        android:id="@+id/readText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/iconTint"
+        android:drawableLeft="@drawable/baseline_keyboard_voice_24"
+        android:text="Read out loud" />
 
 </LinearLayout>

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Calendar;
 
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,6 +101,69 @@ public class MainActivity extends AppCompatActivity {
         // First Medication
         ImageButton pill_1_is_taken = findViewById(R.id.pills1_taken);
         ImageButton pill_1_not_taken = findViewById(R.id.pills1_not_taken);
+        ImageButton pill_2_is_taken = findViewById(R.id.pills2_taken);
+        ImageButton pill_2_not_taken = findViewById(R.id.pills2_not_taken);
+        Button questionButton = findViewById(R.id.questions);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("PillIntakePref", MODE_PRIVATE);
+        boolean ispill1taken = sharedPreferences.getBoolean("isPill1Taken", false);
+        boolean ispill1nottaken = sharedPreferences.getBoolean("isPill1NotTaken", false);
+
+        boolean ispill2taken = sharedPreferences.getBoolean("isPill2Taken", false);
+        boolean ispill2nottaken = sharedPreferences.getBoolean("isPill2NotTaken", false);
+
+        String pill1Date = sharedPreferences.getString("pill1Date", "");
+        String pill2Date = sharedPreferences.getString("pill2Date", "");
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //check if 24 hours have passed for pill 1
+        if (!pill1Date.isEmpty() && !currentDate.equals(pill1Date)){
+            editor.putBoolean("isPill1Taken", false);
+            editor.putBoolean("isPill1NotTaken", false);
+            editor.putString("pill1Date", "");
+            editor.apply();
+        }
+        // check if 24 hours have passed for pill 2
+        if (!pill2Date.isEmpty() && !currentDate.equals(pill2Date)){
+            editor.putBoolean("isPill2Taken", false);
+            editor.putBoolean("isPill2NotTaken", false);
+            editor.putString("pill2Date", "");
+            editor.apply();
+        }
+        //Shared preferences for pill 1
+        if (ispill1taken) {
+            pill_1_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.selected_rounded_button));
+            pill_1_not_taken.setEnabled(false);
+        }else{
+            pill_1_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
+            pill_1_not_taken.setEnabled(true);
+        }
+
+        if (ispill1nottaken) {
+            pill_1_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.deselected_rounded_button));
+            pill_1_is_taken.setEnabled(false);
+        }else{
+            pill_1_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
+            pill_1_is_taken.setEnabled(true);
+        }
+
+        // shared preferences for pill 2
+        if (ispill2taken) {
+            pill_2_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.selected_rounded_button));
+            pill_2_not_taken.setEnabled(false);
+        }else{
+            pill_2_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
+            pill_2_not_taken.setEnabled(true);
+        }
+
+        if (ispill2nottaken) {
+            pill_2_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.deselected_rounded_button));
+            pill_2_is_taken.setEnabled(false);
+        }else{
+            pill_2_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
+            pill_2_is_taken.setEnabled(true);
+        }
         pill_1_is_taken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +174,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     pill_1_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
                     pill_1_not_taken.setEnabled(true);
+                    editor.putBoolean("isPill1Taken", false);
+                    editor.remove("pill1Date");
                 }else {
                     PillIntake pillIntake = new PillIntake("Aspirin", true);
                     DatabaseReference newEntryRef = reference.child("users").child(currentDate).push();
@@ -117,8 +183,11 @@ public class MainActivity extends AppCompatActivity {
                     pill1IsTakenKey = newEntryRef.getKey();
                     pill_1_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.selected_rounded_button));
                     pill_1_not_taken.setEnabled(false);
+                    editor.putBoolean("isPill1Taken", true);
+                    editor.putString("pill1Date",currentDate);
                 }
                 isPill1Taken = !isPill1Taken;
+                editor.apply();
             }
         });
         pill_1_not_taken.setOnClickListener(new View.OnClickListener() {
@@ -131,6 +200,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     pill_1_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
                     pill_1_is_taken.setEnabled(true);
+                    editor.putBoolean("isPill1NotTaken", false);
+                    editor.remove("pill1Date");
                 }else {
                     PillIntake pillIntake = new PillIntake("Aspirin", false);
                     DatabaseReference newEntryRef = reference.child("users").child(currentDate).push();
@@ -138,15 +209,14 @@ public class MainActivity extends AppCompatActivity {
                     pill1NotTakenKey = newEntryRef.getKey();
                     pill_1_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.deselected_rounded_button));
                     pill_1_is_taken.setEnabled(false);
-
+                    editor.putBoolean("isPill1NotTaken", true);
+                    editor.putString("pill1Date", currentDate);
                 }
                isPill1NotTaken =! isPill1NotTaken;
+                editor.apply();
             }
         });
 
-        // Second Medication
-        ImageButton pill_2_is_taken = findViewById(R.id.pills2_taken);
-        ImageButton pill_2_not_taken = findViewById(R.id.pills2_not_taken);
         pill_2_is_taken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +227,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     pill_2_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
                     pill_2_not_taken.setEnabled(true);
+                    editor.putBoolean("isPill2Taken", false);
+                    editor.remove("pill2Date");
                 }else {
                     PillIntake pillIntake = new PillIntake("Ibuprofen", true);
                     DatabaseReference newEntryRef = reference.child("users").child(currentDate).push();
@@ -164,8 +236,11 @@ public class MainActivity extends AppCompatActivity {
                     pill2IsTakenKey = newEntryRef.getKey();
                     pill_2_is_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.selected_rounded_button));
                     pill_2_not_taken.setEnabled(false);
+                    editor.putBoolean("isPill2Taken", true);
+                    editor.putString("pill2Date", currentDate);
                 }
                 isPill2Taken = !isPill2Taken;
+                editor.apply();
             }
         });
         pill_2_not_taken.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     pill_2_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
                     pill_2_is_taken.setEnabled(true);
+                    editor.putBoolean("isPill2NotTaken", false);
+                    editor.remove("pill2Date");
                 }else {
                     PillIntake pillIntake = new PillIntake("Ibuprofen", false);
                     DatabaseReference newEntryRef = reference.child("users").child(currentDate).push();
@@ -185,9 +262,11 @@ public class MainActivity extends AppCompatActivity {
                     pill2NotTakenKey = newEntryRef.getKey();
                     pill_2_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.deselected_rounded_button));
                     pill_2_is_taken.setEnabled(false);
-
+                    editor.putBoolean("isPill2NotTaken", true);
+                    editor.putString("pill2Date", currentDate);
                 }
                 isPill2NotTaken =! isPill2NotTaken;
+                editor.apply();
             }
         });
         // Heart Rate Line Chart
@@ -295,6 +374,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, InputDataActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        questionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, EducationalActivity.class);
                 startActivity(intent);
             }
         });

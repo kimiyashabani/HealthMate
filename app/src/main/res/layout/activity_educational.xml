@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9FAF5">
+    android:background="#DFEEFF">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
@@ -34,9 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/questions"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:layout_centerHorizontal="true"
-            android:text="Response will appear here"/>
+            android:text="Response will appear here..."
+            android:textStyle="bold"/>
     </LinearLayout>
     <GridView
         android:id="@+id/gridView"

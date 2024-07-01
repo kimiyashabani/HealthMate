@@ -45,6 +45,12 @@ android {
 
 }
 
+configurations {
+    all {
+        exclude(group = "javax.xml.bind", module = "jaxb-api")
+    }
+}
+
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -65,18 +71,18 @@ dependencies {
     // TODO: Add the dependencies for Firebase products you want to use
     // When using the BoM, don't specify versions in Firebase dependencies
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth:21.0.3")
     // for Realtime Database
     implementation("com.google.firebase:firebase-database:21.0.0")
     // for visualization
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
-    implementation("com.sun.mail:android-mail:1.6.6")
-    implementation("com.sun.mail:android-activation:1.6.6")
-
     implementation("com.google.api-client:google-api-client-android:1.33.0")
     implementation("com.google.apis:google-api-services-gmail:v1-rev110-1.25.0")
     implementation("com.google.android.gms:play-services-auth:19.0.0")
     implementation("com.google.api-client:google-api-client-gson:1.33.0")
+
+
 
 
 }

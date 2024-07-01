@@ -37,6 +37,8 @@
         <activity android:name=".HeartRateActivity" />
         <activity android:name=".EducationalActivity" />
         <activity android:name=".DetailActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignupActivity" />
 
     </application>
 
