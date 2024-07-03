@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
-        loginReference = db.getReference("users");
+        loginReference = db.getReference("Users");
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

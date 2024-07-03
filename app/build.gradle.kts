@@ -82,7 +82,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:19.0.0")
     implementation("com.google.api-client:google-api-client-gson:1.33.0")
 
-
+    // adding location dependencies
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
 
 }

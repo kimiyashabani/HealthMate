@@ -30,7 +30,7 @@ public class SignupActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
-        reference = db.getReference("users");
+        reference = db.getReference("Users");
 
         name = findViewById(R.id.name);
         familyName = findViewById(R.id.familyName);

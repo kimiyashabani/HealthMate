@@ -230,6 +230,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/section1"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/temperatureList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Heart rate:"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/temperatureLineChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="20dp">
 
@@ -242,7 +266,8 @@
                     android:backgroundTint="@color/iconTint"
                     android:drawableLeft="@drawable/baseline_add_24"
                     android:drawableTint="@color/white"
-                    android:text="Import Data" />
+                    android:text="Import Data"
+                    android:layout_marginRight="10dp"/>
                 <Button
                     android:id="@+id/questions"
                     android:layout_width="wrap_content"
