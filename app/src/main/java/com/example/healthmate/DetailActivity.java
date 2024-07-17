@@ -64,7 +64,7 @@ public class DetailActivity extends AppCompatActivity implements TextToSpeech.On
         }
         super.onDestroy();
     }
-
+    // READING THE TEXT
     private void speackOut(){
         String text = articleText.getText().toString();
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);

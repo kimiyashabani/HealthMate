@@ -64,7 +64,6 @@ public class HeartRateActivity extends AppCompatActivity {
         SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                // The surface is created. You can now tell the camera where to draw the preview.
                 try {
                     camera.setPreviewDisplay(holder);
                     camera.startPreview();
@@ -93,7 +92,6 @@ public class HeartRateActivity extends AppCompatActivity {
         previewHolder.addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
-                // The Surface has been created, acquire the camera and tell it where to draw.
                 camera = Camera.open();
                 try {
                     camera.setPreviewDisplay(holder);
@@ -133,7 +131,6 @@ public class HeartRateActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // Optionally, add any custom logic here if needed
     }
     private void startHeartRateMeasurement() {
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -158,7 +155,7 @@ public class HeartRateActivity extends AppCompatActivity {
         camera.startPreview();
         startTime = System.currentTimeMillis();
         isHeartRateMeasurementRunning = true;
-        //Running the measurement for 30 seconds
+        //Running the measurement for 60 seconds
         new Handler().postDelayed(this::stopHeartRateMeasurement,60000);
         new CountDownTimer(60000, 1000) {
             public void onTick(long millisUntilFinished) {
@@ -217,14 +214,12 @@ public class HeartRateActivity extends AppCompatActivity {
         }
         long averageTimeBetweenPeaks = sumOfDifferences / (peaks.size() - 1);
         // calculating heartrate based on the red intensities
-        //float heartRate = (60000.0f / (averageTimeBetweenPeaks * measurementDurationInMillis)) * redIntensities.size();
         float heartRate = peaks.size()/(60.0f)*100;
-        //float heartRate = (60000.0f / averageTimeBetweenPeaks);
         String heartRateString = String.format("%.1f", heartRate);
         heartRateTextView.setText("Heart rate: " + Math.round(heartRate) + " bpm");
         heartRateTextView.setVisibility(View.VISIBLE);
 
-        // Saving the data to Firebase
+        // SAVING HEART RATE DATA TO FIREBASE
         saveDataToFirebase("1", "heartrate", heartRateString);
     }
     private long calculateThreshold(ArrayList<Long> redIntensities) {

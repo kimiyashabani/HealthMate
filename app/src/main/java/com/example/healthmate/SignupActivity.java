@@ -29,6 +29,7 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_singup);
 
         FirebaseApp.initializeApp(this);
+        // CREATING A NEW USER ON FIREBASE BASED ON THE NEW USER DATA
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = db.getReference("Users");
 

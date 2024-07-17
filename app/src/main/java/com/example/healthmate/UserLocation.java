@@ -3,9 +3,13 @@ package com.example.healthmate;
 public class UserLocation {
     private double latitude;
     private double longitude;
-     public UserLocation(double latitude, double longitude) {
+    private String city;
+    private String country;
+     public UserLocation(double latitude, double longitude, String city, String country) {
          this.latitude = latitude;
          this.longitude = longitude;
+         this.city = city;
+         this.country = country;
      }
     public UserLocation() {}
     public double getLatitude() {
@@ -19,5 +23,12 @@ public class UserLocation {
     }
     public void setLongitude(int longitude) {
         this.longitude = longitude;
+    }
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
     }
 }

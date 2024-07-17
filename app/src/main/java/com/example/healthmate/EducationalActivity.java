@@ -34,7 +34,7 @@ public class EducationalActivity extends AppCompatActivity {
         speakButton.setOnClickListener(v -> {
             promptSpeechInput();
         });
-
+        // SETTING UP THE GRIDVIEW THAT CONTAINS THE EDUCATIONAL TERMS
         String[] values = new String[] {
                 "What is hypertension?",
                 "What is the function of insulin in the body?",
@@ -56,7 +56,7 @@ public class EducationalActivity extends AppCompatActivity {
         detailedTerms.put("What is chronic obstructive pulmonary disease (COPD)?", "COPD is a chronic lung disease that makes it difficult to breathe. It includes conditions such as emphysema and chronic bronchitis. COPD is often caused by smoking.");
         detailedTerms.put("What is a stress test?", "A stress test is a test used to evaluate how well your heart functions during physical activity. It involves walking on a treadmill or riding a stationary bike while your heart rate and blood pressure are monitored.");
 
-
+        // LOAD IMAGES FOR THE EDUCATIONAL TERMS
         int[] imageIds = new int[] {
                 R.drawable.artboard2,
                 R.drawable.artboard7,
@@ -74,7 +74,7 @@ public class EducationalActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
-
+    // USER ASKS A QUESTION FROM AI ASSISTANT
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -87,6 +87,7 @@ public class EducationalActivity extends AppCompatActivity {
             airesponse.setText("Speech not supported");
         }
     }
+    // CONNNECT TO THE API TO GET A RESPONSE
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

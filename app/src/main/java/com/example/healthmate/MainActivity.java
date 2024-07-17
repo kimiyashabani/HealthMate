@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.location.Geocoder;
+import android.location.Address;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,7 +24,6 @@ import java.util.Calendar;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,7 +55,7 @@ import android.location.Location;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 public class MainActivity extends AppCompatActivity {
-    //Firebase configuration
+    // CONFIGURATION
     ActivityMainBinding binding;
     private PieChart pieChart;
     FirebaseDatabase db;
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference locationReference;
     private boolean isPill1Taken = false;
     private boolean isPill1NotTaken = false;
-
     private boolean isPill2Taken = false;
     private boolean isPill2NotTaken = false;
     private String pill1IsTakenKey = null;
@@ -74,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     private int IbuprofenTaken = 0;
     private int IbuprofenNotTaken = 0;
     private String specificDate;
-    private String specificDataDate;
     private static final String EMERGENCY_NUMBER = "+34614140621";
     private static final int REQUEST_CALL_PERMISSION = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
@@ -87,19 +87,21 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         setContentView(R.layout.activity_main);
+
+        // INITIALIZATION OF FIREBASE DATABASE
         FirebaseApp.initializeApp(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = db.getReference("PillIntake");
         healthReference = db.getReference("HealthData");
         locationReference = db.getReference("Location");
+
         pieChart = findViewById(R.id.pie_chart);
         TextView medication1 = findViewById(R.id.Med1);
         TextView medication2 = findViewById(R.id.Med2);
         medication1.setText("Aspirin");
         medication2.setText("Ibuprofen");
         String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        // First Medication
         ImageButton pill_1_is_taken = findViewById(R.id.pills1_taken);
         ImageButton pill_1_not_taken = findViewById(R.id.pills1_not_taken);
         ImageButton pill_2_is_taken = findViewById(R.id.pills2_taken);
@@ -116,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         String pill1Date = sharedPreferences.getString("pill1Date", "");
         String pill2Date = sharedPreferences.getString("pill2Date", "");
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
         //check if 24 hours have passed for pill 1
         if (!pill1Date.isEmpty() && !currentDate.equals(pill1Date)){
             editor.putBoolean("isPill1Taken", false);
@@ -160,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
             pill_2_not_taken.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.rounded_button));
             pill_2_is_taken.setEnabled(true);
         }
+        // WRITING MEDICATION DATA TO THE FIREBASE
         pill_1_is_taken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -264,16 +268,10 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
-        // Heart Rate Line Chart
+
+        // READING DATA FROM FIREBASE AND DISPLAYING IT IN THE CHARTS
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        ArrayList<Entry> heartRateEntries = new ArrayList<>();
-        ArrayList<BarEntry> bloodPressureEntries = new ArrayList<>();
-        ArrayList<Entry> temperatureEntries = new ArrayList<>();
-        List<String> dates = new ArrayList<>();
-
-
-
         for (int i=0 ; i<30 ; i++) {
             calendar.setTime(new Date());
             calendar.add(Calendar.DAY_OF_YEAR, -i);
@@ -284,13 +282,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     ArrayList<Entry> heartRateEntries = new ArrayList<>();
-                    ArrayList<BarEntry> bloodPressureEntriesForDate = new ArrayList<>();
+                    ArrayList<BarEntry> bloodPressureEntries = new ArrayList<>();
                     ArrayList<Entry> temperatureEntries= new ArrayList<>();
                     List<String> dates = new ArrayList<>();
                     int index = 0;
                     int bloodIndex = 0;
                     int temperatureIndex = 0;
-                    // Iterate through all dates (keys) under the user's node
                     for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
                         String specificDataDate = dateSnapshot.getKey();
                         if (specificDataDate != null) {
@@ -319,7 +316,7 @@ public class MainActivity extends AppCompatActivity {
                                     String valueString = healthData.getValue().replace(",", ".");
                                     try {
                                         float bloodPressure = Float.parseFloat(valueString);
-                                        bloodPressureEntriesForDate.add(new BarEntry(bloodIndex, bloodPressure));
+                                        bloodPressureEntries.add(new BarEntry(bloodIndex, bloodPressure));
                                         bloodIndex += 1;
                                     } catch (NumberFormatException e) {
                                         System.out.println("Error parsing blood pressure value: " + healthData.getValue());
@@ -330,22 +327,18 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    // Create and set the data set for the chart
+                    // SETTING DATA ON THE CHARTS
                     LineDataSet heartRateDataSet = new LineDataSet(heartRateEntries, "Heart Rate");
                     heartRateDataSet.setColor(ColorTemplate.rgb("FFCE59"));
                     heartRateDataSet.setLineWidth(2);
                     heartRateDataSet.setCircleColor(ColorTemplate.rgb("656853"));
-
                     LineData heartRateLineData = new LineData(heartRateDataSet);
                     heartRateLineChart.setData(heartRateLineData);
-
-                    // Set the custom formatter for the x-axis
                     XAxis xAxis = heartRateLineChart.getXAxis();
                     xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
-                    xAxis.setGranularity(1f); // Ensure labels are shown for each date
+                    xAxis.setGranularity(1f);
                     xAxis.setGranularityEnabled(true);
-
-                    heartRateLineChart.invalidate(); // Refresh chart
+                    heartRateLineChart.invalidate();
 
                     // SETTING UP LINE CHART FOR TEMPERATURE
                     temperatureEntries.addAll(temperatureEntries);
@@ -353,34 +346,33 @@ public class MainActivity extends AppCompatActivity {
                     temperatureDataSet.setColors(ColorTemplate.rgb("FFCE59"));
                     temperatureDataSet.setLineWidth(2);
                     temperatureDataSet.setCircleColors(ColorTemplate.rgb("656853"));
-
                     LineData temperatureLineData = new LineData(temperatureDataSet);
                     temperatureLineChart.setData(temperatureLineData);
                     XAxis xAxisTemp = temperatureLineChart.getXAxis();
                     xAxisTemp.setValueFormatter(new IndexAxisValueFormatter(dates));
-                    xAxisTemp.setGranularity(1f); // Ensure labels are shown for each date
+                    xAxisTemp.setGranularity(1f);
                     xAxisTemp.setGranularityEnabled(true);
-
-                    temperatureLineChart.invalidate(); // refresh
+                    temperatureLineChart.invalidate();
 
                     //SETTING UP BAR CHART FOR BLOOD PRESSURE
-                    bloodPressureEntries.addAll(bloodPressureEntriesForDate);
+                    bloodPressureEntries.addAll(bloodPressureEntries);
                     BarDataSet bloodPressureDataSet = new BarDataSet(bloodPressureEntries, "Blood Pressure");
                     BarData bloodPressureBarData = new BarData(bloodPressureDataSet);
                     XAxis xAxisBlood = temperatureLineChart.getXAxis();
                     xAxisBlood.setValueFormatter(new IndexAxisValueFormatter(dates));
-                    xAxisBlood.setGranularity(1f); // Ensure labels are shown for each date
+                    xAxisBlood.setGranularity(1f);
                     xAxisBlood.setGranularityEnabled(true);
                     bloodPressureBarChart.setData(bloodPressureBarData);
                     bloodPressureDataSet.setColors(ColorTemplate.rgb("FFCE59"));
                     bloodPressureBarChart.setBorderColor(ColorTemplate.rgb("656853"));
-                    bloodPressureBarChart.invalidate(); // refresh
+                    bloodPressureBarChart.invalidate();
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     System.out.println("Failed to read value.");
                 }
             });
+            // SETTING UP MEDICATION INTAKE PIE CHART
             DatabaseReference pillIntakeDataReference = reference.child("users").child(specificDate);
             pillIntakeDataReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -415,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        // Weight TextView
+        // SETTING UP WEIGHT TEXTVIEW
         Intent intent = getIntent();
         int weight = intent.getIntExtra("weight", 0);
         TextView weightTextView = findViewById(R.id.weightTextView);
@@ -465,11 +457,29 @@ public class MainActivity extends AppCompatActivity {
                             if (location != null) {
                                 double latitude = location.getLatitude();
                                 double longitude = location.getLongitude();
+                                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                                 locationReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        UserLocation userLocation = new UserLocation(latitude, longitude);
-                                        locationReference.child(specificDate).push().setValue(userLocation);
+//                                        UserLocation userLocation = new UserLocation(latitude, longitude);
+//                                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//                                        String formattedNow = sdf.format(new Date());
+//                                        locationReference.child(formattedNow).push().setValue(userLocation);4
+
+                                        try {
+                                            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                                            if (addresses != null && !addresses.isEmpty()) {
+                                                String city = addresses.get(0).getLocality();
+                                                String country = addresses.get(0).getCountryName();
+                                                // Now you can use city and country in your UserLocation object
+                                                UserLocation userLocation = new UserLocation(latitude, longitude, city, country);
+                                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                                                String formattedNow = sdf.format(new Date());
+                                                locationReference.child(formattedNow).push().setValue(userLocation);
+                                            }
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
@@ -483,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
     }
+    //CHECK IF THE USER IS FEELING SHORTNESS OF BREATH AND SENDING ALARM
     private void showWarningDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Health Check")
@@ -497,6 +508,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNegativeButton("No", null)
                 .show();
     }
+    // CHECK IF THE APP HAS THE CALL PERMISSION
     private void checkCallingPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL_PERMISSION);
@@ -504,6 +516,7 @@ public class MainActivity extends AppCompatActivity {
             callEmergencyNumber();
         }
     }
+    // EMERGENCY CALL
     private void callEmergencyNumber() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + EMERGENCY_NUMBER));
@@ -545,6 +558,7 @@ public class MainActivity extends AppCompatActivity {
         intent.setData(uri);
         startActivity(intent);
     }
+    // SETTING UP THE PIE CHART
     private void setupPieChart() {
         // Configure pie chart settings
         pieChart.setUsePercentValues(true);
@@ -553,7 +567,7 @@ public class MainActivity extends AppCompatActivity {
         pieChart.setDragDecelerationFrictionCoef(0.95f);
         pieChart.setDrawHoleEnabled(true);
     }
-
+    // LOADING DATA INTO THE PIE CHART
     private void loadPieChartData() {
         List<PieEntry> entries = new ArrayList<>();
         // Add data entries for pills taken

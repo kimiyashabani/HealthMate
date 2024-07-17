@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity{
                                 }
                             }
                             if (userExists) {
+                                // USER EXISTS THEN LOGIN
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }
@@ -83,32 +84,6 @@ public class LoginActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
-            }
-        });
-    }
-    private void userLogin(String username, String password){
-        loginReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean userExists = false;
-                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    User userLogin = userSnapshot.getValue(User.class);
-                    if (userLogin != null && userLogin.getName() != null && userLogin.getPassword() != null){
-                        if (userLogin.getName().equals(username) && userLogin.getPassword().equals(password))
-                        {
-                            userExists = true;
-                            break;
-                        }
-                    }
-                }
-                if(userExists){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-               System.out.println("Error: " + error.getMessage());
             }
         });
     }

@@ -48,18 +48,18 @@ public class InputDataActivity extends AppCompatActivity implements TextToSpeech
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_data_input);
-        // initializing text to speech engine
+        // INITIALIZE TEXT TO SPEECH ENGINE
         tts = new TextToSpeech(this, this);
+        // INITIALIZE FIREBASE
         FirebaseApp.initializeApp(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = db.getReference("HealthData");
-        //Defining Textviews to toggle:
+        // DEFINING TEXT VIEWS THAT ARE GOING TO TOGGLE THE SPEECH INPUT
         TextView heartRate = findViewById(R.id.heartrate);
         TextView bloodPressure = findViewById(R.id.bloodpressure);
         TextView weight = findViewById(R.id.weight);
         TextView temperature = findViewById(R.id.temperature);
 
-        // Setting Click Listeners:
         heartRate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,14 +115,12 @@ public class InputDataActivity extends AppCompatActivity implements TextToSpeech
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        // Optionally, add any custom logic here if needed
     }
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...");
-
         try {
             startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);
         } catch (Exception e) {
@@ -147,7 +145,6 @@ public class InputDataActivity extends AppCompatActivity implements TextToSpeech
 
             @Override
             public void onError(String utteranceId) {
-                // Handle errors
             }
         });
 
@@ -182,7 +179,7 @@ public class InputDataActivity extends AppCompatActivity implements TextToSpeech
                 String spokenText = result.get(0).toLowerCase();
                 confirmationSpeechInput = spokenText;
                 if (confirmationSpeechInput.contains("yes")) {
-                    // User confirmed, save data to Firebase
+                    // USER CONFIREMED --> SAVE DATA TO FIREBASE
                     saveDataToFirebase("1", currentDataType, initialSpeechInput);
                     Toast.makeText(InputDataActivity.this, "Data saved!", Toast.LENGTH_SHORT).show();
                     if (currentDataType.equals("temperature")) {
@@ -200,10 +197,10 @@ public class InputDataActivity extends AppCompatActivity implements TextToSpeech
                         startActivity(intent);
                     }
                 } else if (confirmationSpeechInput.contains("no")) {
-                    // User declined, do nothing or handle as needed
+                    // User DECLINED
                     Toast.makeText(InputDataActivity.this, "Data not saved.", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle unrecognized response
+                    // HANDLE UNRECOGNIZED INPUT
                     Toast.makeText(InputDataActivity.this, "Please say Yes or No.", Toast.LENGTH_SHORT).show();
                 }
             }
