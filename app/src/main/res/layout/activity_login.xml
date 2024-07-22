@@ -72,7 +72,7 @@
                 android:id="@+id/signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/textColor"
                 android:text="Signup" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

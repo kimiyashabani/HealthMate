@@ -27,6 +27,8 @@ import android.widget.TextView;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.example.healthmate.databinding.ActivityMainBinding;
 import com.github.mikephil.charting.charts.BarChart;
@@ -54,6 +56,19 @@ import android.Manifest;
 import android.location.Location;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.MenuItem;
+import com.google.android.material.bottomappbar.BottomAppBar;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.FrameLayout;
+import com.example.healthmate.R;
+
 public class MainActivity extends AppCompatActivity {
     // CONFIGURATION
     ActivityMainBinding binding;
@@ -80,13 +95,21 @@ public class MainActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private FusedLocationProviderClient fusedLocationClient;
 
+    private FrameLayout frameLayout;
+    private BottomAppBar bottomAppBar;
+    private BottomNavigationView bottomNavigationView;
+    private FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        setContentView(R.layout.activity_main);
+
+        initRecyclerView();
+
 
         // INITIALIZATION OF FIREBASE DATABASE
         FirebaseApp.initializeApp(this);
@@ -106,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton pill_1_not_taken = findViewById(R.id.pills1_not_taken);
         ImageButton pill_2_is_taken = findViewById(R.id.pills2_taken);
         ImageButton pill_2_not_taken = findViewById(R.id.pills2_not_taken);
-        Button questionButton = findViewById(R.id.questions);
+        //Button questionButton = findViewById(R.id.questions);
         LineChart heartRateLineChart = findViewById(R.id.heartRateLineChart);
         BarChart bloodPressureBarChart = findViewById(R.id.bloodPressureBarChart);
         LineChart temperatureLineChart = findViewById(R.id.temperatureLineChart);
@@ -412,21 +435,6 @@ public class MainActivity extends AppCompatActivity {
         int weight = intent.getIntExtra("weight", 0);
         TextView weightTextView = findViewById(R.id.weightTextView);
         weightTextView.setText(weight + "kg");
-        findViewById(R.id.dataimport).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, InputDataActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        questionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, EducationalActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //CHECK IF THE APP HAS LOCATION PERMISSION
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -581,5 +589,19 @@ public class MainActivity extends AppCompatActivity {
         pieData.setValueFormatter(new PercentFormatter(pieChart));
         pieChart.setData(pieData);
         pieChart.invalidate();
+    }
+
+    private void initRecyclerView(){
+        ArrayList<CategoryDomain> categoryList=  new ArrayList<>();
+        categoryList.add(new CategoryDomain("Heart rate", R.drawable.heartrate,R.color.heartrate));
+        categoryList.add(new CategoryDomain("Sleep",R.drawable.sleep,R.color.sleep));
+        categoryList.add(new CategoryDomain("Weight",R.drawable.scales,R.color.weight ));
+        categoryList.add(new CategoryDomain("Blood Pressure",R.drawable.bloodpressure,R.color.bloodpressure ));
+        categoryList.add(new CategoryDomain("Temperature",R.drawable.thermometer,R.color.temperature ));
+
+        RecyclerView recyclerView = findViewById(R.id.healthMetricsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        CategoryAdapter categoryAdapter = new CategoryAdapter(this, categoryList);
+        recyclerView.setAdapter(categoryAdapter);
     }
 }

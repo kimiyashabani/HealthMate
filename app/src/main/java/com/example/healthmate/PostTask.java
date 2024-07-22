@@ -19,7 +19,7 @@ public class PostTask extends AsyncTask<String, Void, String> {
         String response = "";
         try {
             // CONNECTING TO THE LOCAL SERVER TO GET THE RESPONSE
-            URL url = new URL("http://192.168.1.90:5000/");
+            URL url = new URL("http://172.20.10.6:5000/");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");

@@ -109,4 +109,3 @@ public class EducationalActivity extends AppCompatActivity {
     }
 }
 
-

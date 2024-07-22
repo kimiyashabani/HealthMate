@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9FAF5">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:cardCornerRadius="10dp"
+                android:layout_margin="10pt"
+                android:elevation="10dp">
+                <ImageView
+                    android:id="@+id/greeting_1_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/greeting1"/>
+            </androidx.cardview.widget.CardView>
+
+
+            <TextView
+                android:id="@+id/greeting_1_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We care about you and \n
+your health!"
+                android:textColor="@color/iconTint"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="32dp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/greeting_2_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This application is going to be your there for you in your process of healing"
+                android:paddingRight="30pt"
+                android:paddingLeft="30dp"
+                android:textColor="@color/iconTint"
+                android:textAlignment="center"
+                android:textSize="18dp"
+                android:layout_marginTop="10dp"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/intro_background"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="What's more?"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+                    android:drawableTint="@color/white"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
