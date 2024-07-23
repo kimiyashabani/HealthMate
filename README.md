@@ -1,4 +1,4 @@
-![Logo](https://drive.google.com/file/d/1Z-0j4SFp-6kzE1cjrSEc_8PeV48Cs5CF/view?usp=sharing)
+![logo](https://github.com/user-attachments/assets/9cdfdd6f-ffc6-4634-8475-12b2aae5db32)
 
 
 # Health Mate
