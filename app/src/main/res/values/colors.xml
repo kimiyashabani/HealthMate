@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="textColor">#FF000000</color>
-    <color name="textColorOP">#818181</color>
+    <color name="textColorOP">#242424</color>
     <color name="white">#FFFFFFFF</color>
     <color name="iconTint">#6E3BFF</color>
     <color name="backgroundcolor">#F9FAF5</color>
     <color name="primaryColor">#E2D7FF</color>
     <color name="selectedItemBackgroundColor">#334155</color>
+    <color name="disabled">#EBEBEB</color>
 
     <color name="heartrate">#14B8A6</color>
     <color name="sleep">#1965D9</color>
     <color name="weight">#A855F7</color>
     <color name="bloodpressure">#F43F5E</color>
     <color name="temperature">#F59E0B</color>
+    <color name="medicine">#FFCE59</color>
 
 </resources>

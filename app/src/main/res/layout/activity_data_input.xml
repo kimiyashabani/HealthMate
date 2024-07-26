@@ -30,21 +30,6 @@
                 android:gravity="center">
 
                 <TextView
-                    android:id="@+id/heartrate"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/datainput_design"
-                    android:drawableTop="@drawable/baseline_monitor_heart_24"
-                    android:drawableTint="@color/iconTint"
-                    android:gravity="center"
-                    android:padding="30dp"
-                    android:text="Heart rate"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp"
-                    android:layout_marginRight="10dp"/>
-
-                <TextView
                     android:id="@+id/temperature"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

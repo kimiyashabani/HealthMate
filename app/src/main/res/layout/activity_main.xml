@@ -67,6 +67,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_notifications_24"
                         app:layout_constraintBottom_toBottomOf="@+id/profileImage"
+                        android:background="@drawable/filled_color_button"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/profileImage" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -117,44 +118,17 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/section4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/section3"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/weightlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Your current weight: "
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/weightTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Weight"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="15dp"
                 android:padding="20dp">
                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Health Metrics"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"/>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -164,258 +138,166 @@
                     android:orientation="horizontal"
                     android:padding="15dp"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="overview"
+                    android:textSize="20sp"
+                    android:textStyle="bold">
+                </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/overview_recyclerview"
+                    android:padding="15dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Any Question?"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp">
+                </TextView>
+                <Button
+                    android:layout_width="match_parent"
+                    android:id="@+id/askai"
+                    android:layout_height="100dp"
+                    android:textColor="@color/textColor"
+                    android:text="Ask your questions from AI"
+                    android:drawableRight="@drawable/baseline_keyboard_arrow_right_24"
+                    android:drawableTint="@color/iconTint"
+                    android:background="@drawable/filled_color_button"></Button>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="20dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medication intake"></TextView>
+                    android:text="Virtual consult"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:paddingLeft="20dp">
+                </TextView>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:background="@color/disabled"
+                    android:padding="10dp"
+                    android:orientation="vertical">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:layout_marginRight="15dp">
-
-                        <TextView
-                            android:id="@+id/Med1"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/datainput_design"
-                            android:drawableTop="@drawable/baseline_medication_24"
-                            android:drawableTint="@color/iconTint"
-                            android:padding="30dp"
-                            android:text="Med 1"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColor"
-                            android:textSize="16sp" />
+                        android:background="@drawable/appointment_bg"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Cardio doctor"
+                                android:textStyle="bold"
+                                android:textSize="18dp"></TextView>
                             <ImageButton
-                                android:id="@+id/pills1_taken"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_done_24" />
+                                android:src="@drawable/baseline_notifications_24"
+                                android:background="@drawable/filled_color_button"
+                                android:padding="5dp"></ImageButton>
 
-                            <ImageButton
-                                android:id="@+id/pills1_not_taken"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_close_24" />
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sunday 07/25/2024"
+                            android:layout_marginBottom="10dp"
+                            android:textAlignment="center"
+                            android:drawableLeft="@drawable/baseline_date_range_24"
+                            android:drawableTint="@color/iconTint"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="20:30"
+                            android:drawableLeft="@drawable/baseline_access_time_filled_24"
+                            android:drawableTint="@color/iconTint"></TextView>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:orientation="vertical"
-                        android:layout_marginRight="15dp">
-                        <TextView
-                            android:id="@+id/Med2"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/datainput_design"
-                            android:drawableTop="@drawable/baseline_medication_24"
-                            android:drawableTint="@color/iconTint"
-                            android:padding="30dp"
-                            android:text="Med 1"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorOP"
-                            android:textSize="16sp" />
+                        android:background="@drawable/appointment_bg"
+                        android:padding="10dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginBottom="10dp">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:text="Cardio doctor"
+                                android:textStyle="bold"
+                                android:textSize="18dp"></TextView>
                             <ImageButton
-                                android:id="@+id/pills2_taken"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_done_24" />
+                                android:src="@drawable/baseline_notifications_24"
+                                android:background="@drawable/filled_color_button"
+                                android:padding="5dp"></ImageButton>
 
-                            <ImageButton
-                                android:id="@+id/pills2_not_taken"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_close_24" />
                         </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
                         <TextView
-                            android:id="@+id/Med3"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/datainput_design"
-                            android:drawableTop="@drawable/baseline_medication_24"
-                            android:drawableTint="@color/iconTint"
-                            android:padding="30dp"
-                            android:text="Med 1"
-                            android:textAlignment="center"
-                            android:textColor="@color/textColorOP"
-                            android:textSize="16sp" />
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal">
-
-                            <ImageButton
-                                android:id="@+id/pills3_taken"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_done_24" />
-
-                            <ImageButton
-                                android:id="@+id/pills3_not_taken"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/rounded_button"
-                                android:paddingTop="5dp"
-                                android:paddingBottom="5dp"
-                                android:src="@drawable/baseline_close_24" />
-                        </LinearLayout>
+                            android:text="Sunday 07/25/2024"
+                            android:layout_marginBottom="10dp"
+                            android:textAlignment="center"
+                            android:drawableLeft="@drawable/baseline_date_range_24"
+                            android:drawableTint="@color/iconTint"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:text="20:30"
+                            android:drawableLeft="@drawable/baseline_access_time_filled_24"
+                            android:drawableTint="@color/iconTint"></TextView>
                     </LinearLayout>
+
                 </LinearLayout>
 
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/section2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/section1"
-                android:orientation="vertical"
-                android:layout_marginTop="20dp"
-                android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/heartrateList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Heart rate:"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/heartRateLineChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginBottom="16dp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/medicationIntakeList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Medication intake:"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pie_chart"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/section3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/section2"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/bloodpressureList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Blood Pressure:"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/bloodPressureBarChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_below="@id/heartRateLineChart"
-                    android:layout_marginBottom="16dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/section1"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:id="@+id/temperatureList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:text="Body temperature:"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <com.github.mikephil.charting.charts.LineChart
-                    android:id="@+id/temperatureLineChart"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginBottom="16dp" />
-
-            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

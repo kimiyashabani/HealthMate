@@ -84,7 +84,22 @@
                 android:textColor="@color/textColor"
                 android:textSize="24sp"
                 android:visibility="gone" />
+             <TextView
+                 android:id="@+id/heartrateList"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginBottom="16dp"
+                 android:text="Heart rate:"
+                 android:textSize="18sp"
+                 android:textStyle="bold" />
+
+             <com.github.mikephil.charting.charts.LineChart
+                 android:id="@+id/heartRateLineChart"
+                 android:layout_width="match_parent"
+                 android:layout_height="200dp"
+                 android:layout_marginBottom="16dp" />
         </LinearLayout>
+
     </ScrollView>
 
 </RelativeLayout>

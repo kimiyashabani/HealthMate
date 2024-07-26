@@ -2,7 +2,6 @@ package com.example.healthmate;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -10,16 +9,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 //CAMERA
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.hardware.Camera;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -27,18 +24,30 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import android.widget.Toast;
-import java.util.Collections;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 // Importing FireBase
 import com.example.healthmate.databinding.ActivityMainBinding;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.FirebaseApp;
-
-import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 public class HeartRateActivity extends AppCompatActivity {
     ActivityMainBinding binding;
@@ -46,6 +55,7 @@ public class HeartRateActivity extends AppCompatActivity {
     DatabaseReference reference;
     private SurfaceView preview;
     private SurfaceHolder previewHolder;
+    DatabaseReference healthReference;
     private Camera camera;
     private boolean isHeartRateMeasurementRunning = false;
     private long startTime = 0;
@@ -55,11 +65,13 @@ public class HeartRateActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE = 200;
     private ProgressBar progressBar;
     private TextView timerText;
+    private String specificDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heart_rate);
+        LineChart heartRateLineChart = findViewById(R.id.heartRateLineChart);
 
         SurfaceHolder.Callback surfaceCallback = new SurfaceHolder.Callback() {
             @Override
@@ -118,6 +130,7 @@ public class HeartRateActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = db.getReference("HealthData");
+        healthReference = db.getReference("HealthData");
         startMeasurementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +140,76 @@ public class HeartRateActivity extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+
+        for (int i=0 ; i<30 ; i++) {
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_YEAR, -i);
+            specificDate = sdf.format(calendar.getTime());
+            DatabaseReference healthDataReference = healthReference.child("users").child("1").child(specificDate);
+            DatabaseReference healthDataDateRef = healthReference.child("users").child("1");
+            healthDataDateRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    ArrayList<Entry> heartRateEntries = new ArrayList<>();
+                    ArrayList<BarEntry> bloodPressureEntries = new ArrayList<>();
+                    ArrayList<Entry> temperatureEntries = new ArrayList<>();
+                    List<String> dates = new ArrayList<>();
+                    int index = 0;
+                    int bloodIndex = 0;
+                    int temperatureIndex = 0;
+                    for (DataSnapshot dateSnapshot : snapshot.getChildren()) {
+                        String specificDataDate = dateSnapshot.getKey();
+                        if (specificDataDate != null) {
+                            dates.add(specificDataDate);
+                            // Iterate through the health data entries under each date
+                            for (DataSnapshot dataSnapshot : dateSnapshot.getChildren()) {
+                                HealthData healthData = dataSnapshot.getValue(HealthData.class);
+                                if (healthData != null && healthData.getType().equals("heartrate")) {
+                                    String valueString = healthData.getValue().replace(",", ".");
+                                    try {
+                                        float heartValue = Float.parseFloat(valueString);
+                                        heartRateEntries.add(new Entry(index, heartValue));
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Error parsing heart rate value: " + healthData.getValue());
+                                    }
+                                }
+                            }
+                            index++;
+                        }
+                    }
+
+                    // SETTING DATA ON THE CHARTS
+                    LineDataSet heartRateDataSet = new LineDataSet(heartRateEntries, "Heart Rate");
+                    heartRateDataSet.setColor(ColorTemplate.rgb("FFCE59"));
+                    heartRateDataSet.setLineWidth(2);
+                    heartRateDataSet.setCircleColor(ColorTemplate.rgb("656853"));
+                    LineData heartRateLineData = new LineData(heartRateDataSet);
+                    heartRateLineChart.setData(heartRateLineData);
+                    XAxis xAxis = heartRateLineChart.getXAxis();
+                    xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
+                    xAxis.setGranularity(1f);
+                    xAxis.setGranularityEnabled(true);
+                    heartRateLineChart.invalidate();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    System.out.println("Failed to read value.");
+                }
+            });
+        }
+
+
+
+
     }
     @Override
     public void onBackPressed() {
@@ -222,14 +305,7 @@ public class HeartRateActivity extends AppCompatActivity {
         // SAVING HEART RATE DATA TO FIREBASE
         saveDataToFirebase("1", "heartrate", heartRateString);
     }
-    private long calculateThreshold(ArrayList<Long> redIntensities) {
-        long sum = 0;
-        for (Long redIntensity : redIntensities) {
-            sum += redIntensity;
-        }
-        long average = sum / redIntensities.size();
-        return average;
-    }
+
     private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         @Override
         public void onPreviewFrame(byte[] data, Camera camera) {
@@ -308,6 +384,8 @@ public class HeartRateActivity extends AppCompatActivity {
             // No-op
         }
     };
+
+
 
     public void saveDataToFirebase(String userId, String type, String value) {
         HealthData healthData = new HealthData(type, value);

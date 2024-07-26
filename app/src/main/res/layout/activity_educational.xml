@@ -44,10 +44,9 @@
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2"
+        android:numColumns="1"
         android:horizontalSpacing="10dp"
         android:verticalSpacing="10dp"
-        android:stretchMode="columnWidth"
         android:gravity="center"
         android:layout_below="@+id/aiquestion"
         android:padding="25dp"/>

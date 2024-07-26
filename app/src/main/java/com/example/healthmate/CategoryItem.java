@@ -1,11 +1,11 @@
 package com.example.healthmate;
 
-public class CategoryDomain {
+public class CategoryItem {
     private String category;
     private int picPath;
     private int backgroundColor;
 
-    public CategoryDomain(String category, int picPath, int backgroundColor) {
+    public CategoryItem(String category, int picPath, int backgroundColor) {
         this.category = category;
         this.picPath = picPath;
         this.backgroundColor = backgroundColor;
