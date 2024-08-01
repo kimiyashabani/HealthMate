@@ -88,5 +88,10 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
 
+    // Connecting Smart watch
+    implementation("com.google.android.gms:play-services-wearable:18.0.0")
+    implementation("com.google.android.support:wearable:2.9.0")
+    compileOnly("com.google.android.wearable:wearable:2.9.0")
+
 
 }
