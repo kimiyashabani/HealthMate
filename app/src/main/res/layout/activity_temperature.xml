@@ -14,13 +14,14 @@
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
-        app:title="Heart Rate Measurement" />
+        app:title="Body Temperature" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp"
+        android:id="@+id/logTemperature"
         app:layout_constraintTop_toBottomOf="@+id/topAppBar">
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="Body temperature:"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <com.github.mikephil.charting.charts.LineChart
@@ -37,6 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/logDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/filled_color_button"
+            android:text="Log Data"></Button>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

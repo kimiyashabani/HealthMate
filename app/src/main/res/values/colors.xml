@@ -7,7 +7,7 @@
     <color name="backgroundcolor">#F9FAF5</color>
     <color name="primaryColor">#E2D7FF</color>
     <color name="selectedItemBackgroundColor">#334155</color>
-    <color name="disabled">#EBEBEB</color>
+    <color name="disabled">#EFEFEF</color>
 
     <color name="heartrate">#14B8A6</color>
     <color name="sleep">#1965D9</color>

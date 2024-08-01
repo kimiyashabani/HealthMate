@@ -23,26 +23,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/temperature"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/datainput_design"
-                    android:drawableTop="@drawable/baseline_thermostat_24"
-                    android:drawableTint="@color/iconTint"
-                    android:gravity="center"
-                    android:padding="30dp"
-                    android:text="Body Temperature"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

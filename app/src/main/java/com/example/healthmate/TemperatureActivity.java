@@ -1,19 +1,20 @@
 package com.example.healthmate;
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -21,39 +22,33 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
+import android.widget.Toast;
 import java.util.Calendar;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class TemperatureActivity extends AppCompatActivity{
+public class TemperatureActivity extends BaseActivity{
     FirebaseDatabase db;
 
     DatabaseReference healthReference;
     private String specificDate;
+
+    private String currentDataType;
+    private String confirmationSpeechInput;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temperature);
-
-        FirebaseApp.initializeApp(this);
-
-        db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
-        healthReference = db.getReference("HealthData");
+        currentDataType = "temperature";
 
         LineChart temperatureLineChart = findViewById(R.id.temperatureLineChart);
+        Button logTempData = findViewById(R.id.logDataButton);
+
+        FirebaseApp.initializeApp(this);
+        db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
+        healthReference = db.getReference("HealthData");
 
 
         // READING DATA FROM FIREBASE AND DISPLAYING IT IN THE CHARTS
@@ -119,5 +114,31 @@ public class TemperatureActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        logTempData.setOnClickListener(v -> {
+            super.promptSpeechInput();
+
+        });
+
     }
+    @Override
+    protected void handleConfirmationResponse(){
+        if (confirmationSpeechInput.contains("yes")) {
+                    // USER CONFIREMED --> SAVE DATA TO FIREBASE
+                    saveDataToFirebase("1", currentDataType, initialSpeechInput);
+                    Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
+
+                    int temperature = Integer.parseInt(initialSpeechInput);
+                    if (temperature > 37.5) {
+
+                    }
+
+                } else if (confirmationSpeechInput.contains("no")) {
+                    // User DECLINED
+                    Toast.makeText(this, "Data not saved.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // HANDLE UNRECOGNIZED INPUT
+                    Toast.makeText(this, "Please say Yes or No.", Toast.LENGTH_SHORT).show();
+                }
+    }
+
 }

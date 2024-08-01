@@ -1,15 +1,16 @@
 package com.example.healthmate;
 
+import android.os.Bundle;
+import android.widget.Button;
+import com.github.mikephil.charting.data.BarEntry;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -19,31 +20,39 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import android.widget.Toast;
+import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class BloodPressureActivity extends AppCompatActivity {
+public class BloodPressureActivity extends BaseActivity{
     FirebaseDatabase db;
-    DatabaseReference reference;
+
     DatabaseReference healthReference;
     private String specificDate;
+
+    private String currentDataType;
+    private String confirmationSpeechInput;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloodpressure);
-        // INITIALIZATION OF FIREBASE DATABASE
+        currentDataType = "bloodPressure";
+
+        BarChart bloodPressureBarChart = findViewById(R.id.bloodPressureBarChart);
+        Button logTempData = findViewById(R.id.logDataButton);
+
         FirebaseApp.initializeApp(this);
         db = FirebaseDatabase.getInstance("https://healthmate-37101-default-rtdb.europe-west1.firebasedatabase.app/");
         healthReference = db.getReference("HealthData");
-        BarChart bloodPressureBarChart = findViewById(R.id.bloodPressureBarChart);
 
 
         // READING DATA FROM FIREBASE AND DISPLAYING IT IN THE CHARTS
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         for (int i=0 ; i<30 ; i++) {
             calendar.setTime(new Date());
             calendar.add(Calendar.DAY_OF_YEAR, -i);
@@ -63,7 +72,7 @@ public class BloodPressureActivity extends AppCompatActivity {
                             // Iterate through the health data entries under each date
                             for (DataSnapshot dataSnapshot : dateSnapshot.getChildren()) {
                                 HealthData healthData = dataSnapshot.getValue(HealthData.class);
-                                 if (healthData != null && healthData.getType().equals("bloodPressure")) {
+                                if (healthData != null && healthData.getType().equals("bloodPressure")) {
                                     String valueString = healthData.getValue().replace(",", ".");
                                     try {
                                         float bloodPressure = Float.parseFloat(valueString);
@@ -98,10 +107,37 @@ public class BloodPressureActivity extends AppCompatActivity {
 
         }
 
+
+
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        logTempData.setOnClickListener(v -> {
+            super.promptSpeechInput();
+
+        });
 
     }
+    @Override
+    protected void handleConfirmationResponse(){
+        if (confirmationSpeechInput.contains("yes")) {
+            // USER CONFIREMED --> SAVE DATA TO FIREBASE
+            saveDataToFirebase("1", currentDataType, initialSpeechInput);
+            Toast.makeText(this, "Data saved!", Toast.LENGTH_SHORT).show();
+
+            int temperature = Integer.parseInt(initialSpeechInput);
+            if (temperature > 37.5) {
+
+            }
+
+        } else if (confirmationSpeechInput.contains("no")) {
+            // User DECLINED
+            Toast.makeText(this, "Data not saved.", Toast.LENGTH_SHORT).show();
+        } else {
+            // HANDLE UNRECOGNIZED INPUT
+            Toast.makeText(this, "Please say Yes or No.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

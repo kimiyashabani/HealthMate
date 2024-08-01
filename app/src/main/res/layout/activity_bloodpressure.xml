@@ -14,7 +14,7 @@
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
-        app:title="Educational Resources" />
+        app:title="Blood Pressure" />
 
     <LinearLayout
         android:id="@+id/section3"
@@ -39,6 +39,12 @@
             android:layout_height="200dp"
             android:layout_below="@id/heartRateLineChart"
             android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/logDataButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/filled_color_button"
+            android:text="Log Data"></Button>
 
     </LinearLayout>
 

@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".InputDataActivity" />
+        <activity android:name=".BaseActivity" />
         <activity android:name=".HeartRateActivity" />
         <activity android:name=".EducationalActivity" />
         <activity android:name=".DetailActivity" />

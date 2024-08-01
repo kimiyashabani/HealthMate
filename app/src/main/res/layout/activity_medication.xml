@@ -21,47 +21,272 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/topAppBar">
+        app:layout_constraintTop_toBottomOf="@+id/topAppBar"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/calendar"
+            android:layout_marginBottom="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:id="@+id/week_days_text"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Week Days"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"/>
+                <ImageView
+                    android:id="@+id/notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/baseline_calendar_month_24"
+                    android:background="@drawable/filled_color_button"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/week_days_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="M"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="T"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="W"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/disabled"
+                        android:background="@drawable/filled_color_button"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="T"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="F"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="S"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:background="@drawable/date_bg">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="S"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12"
+                        android:layout_marginTop="20dp"
+                        android:textSize="16sp"/>
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="20dp">
-
+            android:layout_marginBottom="20dp">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medication intake"></TextView>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Today's medication"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:padding="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/search_bar_background">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="start|center">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/baseline_medication_24"
+                        android:background="@drawable/filled_color_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginRight="5dp"/>
 
                     <TextView
                         android:id="@+id/Med1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/datainput_design"
-                        android:drawableTop="@drawable/baseline_medication_24"
                         android:drawableTint="@color/iconTint"
-                        android:padding="30dp"
                         android:text="Med 1"
                         android:textAlignment="center"
+                        android:layout_gravity="center"
                         android:textColor="@color/textColor"
                         android:textSize="16sp" />
+                    </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
@@ -71,46 +296,53 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:layout_weight="1"
                             android:background="@drawable/rounded_button"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
                             android:src="@drawable/baseline_done_24" />
 
                         <ImageButton
                             android:id="@+id/pills1_not_taken"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:background="@drawable/rounded_button"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
                             android:src="@drawable/baseline_close_24" />
                     </LinearLayout>
                 </LinearLayout>
-
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/Med2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/datainput_design"
-                        android:drawableTop="@drawable/baseline_medication_24"
-                        android:drawableTint="@color/iconTint"
-                        android:padding="30dp"
-                        android:text="Med 1"
-                        android:textAlignment="center"
-                        android:textColor="@color/textColorOP"
-                        android:textSize="16sp" />
-
+                    android:orientation="horizontal"
+                    android:padding="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/search_bar_background">
                     <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="start|center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_medication_24"
+                            android:background="@drawable/filled_color_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginRight="5dp"/>
+
+                        <TextView
+                            android:id="@+id/Med2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/datainput_design"
+                            android:drawableTint="@color/iconTint"
+                            android:text="Med 1"
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/textColor"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
@@ -120,23 +352,76 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:layout_weight="1"
                             android:background="@drawable/rounded_button"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
                             android:src="@drawable/baseline_done_24" />
 
                         <ImageButton
                             android:id="@+id/pills2_not_taken"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:background="@drawable/rounded_button"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
                             android:src="@drawable/baseline_close_24" />
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/search_bar_background">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:gravity="start|center">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/baseline_medication_24"
+                            android:background="@drawable/filled_color_button"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginRight="5dp"/>
+
+                        <TextView
+                            android:id="@+id/Med3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/datainput_design"
+                            android:drawableTint="@color/iconTint"
+                            android:text="Med 1"
+                            android:textAlignment="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/textColor"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/pills3_taken"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/baseline_done_24" />
+
+                        <ImageButton
+                            android:id="@+id/pills3_not_taken"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/baseline_close_24" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
 
             </LinearLayout>
 
@@ -145,9 +430,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="252dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp">
+            >
 
             <TextView
                 android:id="@+id/medicationIntakeList"
@@ -161,7 +446,7 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/pie_chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="230dp" />
         </LinearLayout>
     </LinearLayout>
 
