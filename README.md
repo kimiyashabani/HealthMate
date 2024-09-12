@@ -14,7 +14,9 @@ This model is then integrated within the application for user to :
 
 # App Screenshots
 
-![Logo](https://drive.google.com/file/d/1z7B6POR2UqkcxcrXgjckxR-96GUEKj0p/view?usp=sharing)
+![1](https://github.com/user-attachments/assets/896b7627-6059-4ad2-93fc-d0b68d2c809b)
+![2](https://github.com/user-attachments/assets/ee1aa9eb-7952-4d8f-b49d-85887fb7a0ba)
+![3](https://github.com/user-attachments/assets/8988108c-7b42-4ceb-aecc-9cbcd0dd5ced)
 
 
 ## Documentation
